@@ -14,7 +14,7 @@
             "name": "(Windows) Launch",
             "type": "cppvsdbg",
             "request": "launch",
-            "program": "tecore/bin/tecore.exe",
+            "program": "teditor/bin/teditor.exe",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",

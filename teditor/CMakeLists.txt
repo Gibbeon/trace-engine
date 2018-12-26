@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.9)
-project(tecore)
+project(teditor)
 
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/../../lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/../../lib)
@@ -16,7 +16,7 @@ include_directories(../../include)
  
 #this isn't best practice
 file(GLOB_RECURSE SOURCES "src/*.cpp" )
-add_executable(tecore WIN32 ${SOURCES})
+add_executable(${PROJECT_NAME} WIN32 ${SOURCES})
 
 target_link_libraries(${PROJECT_NAME} d3d12.lib)
 target_link_libraries(${PROJECT_NAME} dxgi.lib)

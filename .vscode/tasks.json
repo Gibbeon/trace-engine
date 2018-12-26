@@ -4,7 +4,7 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "build tecore",
+            "label": "build teditor",
             "type": "shell",
             "command": "py.exe",
             "windows": {
@@ -16,7 +16,7 @@
                 
             ],
             "options": {
-                "cwd": "${workspaceRoot}/tecore"
+                "cwd": "${workspaceRoot}/teditor"
             },
             "group": "build",
             "presentation": {
