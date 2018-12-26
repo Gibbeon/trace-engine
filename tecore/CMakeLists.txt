@@ -1,16 +1,22 @@
 cmake_minimum_required(VERSION 2.8.9)
 project(tecore)
 
-set (PROJECTNAME_ARCHITECTURE "x64")
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/../../lib)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/../../lib)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/../../bin)
 
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/../lib)
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/../lib)
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/../bin)
+#set vs to deploy to the bin folder for both debug and release 
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
  
+#sample doesn't work without this, we should figure out why
 add_compile_options("/sdl")
-include_directories(../include)
+
+include_directories(../../include)
  
-add_executable(tecore WIN32 src/main.cpp src/window.cpp src/win32application.cpp)
+#this isn't best practice
+file(GLOB_RECURSE SOURCES "src/*.cpp" )
+add_executable(tecore WIN32 ${SOURCES})
 
 target_link_libraries(${PROJECT_NAME} d3d12.lib)
 target_link_libraries(${PROJECT_NAME} dxgi.lib)
