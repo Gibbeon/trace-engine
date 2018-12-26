@@ -129,13 +129,16 @@
 //#define __out
 #endif
 
-#define _countof(array) (sizeof(array) / sizeof(array[0]))
-#define SIZE_MAX 0xFFFFFFFF
+
+
 #include  <stdio.h>
 
 #include <windows.h>
+#include <InitGuid.h>
 #include <d3d12.h>
-//#include <dxgi1_4.h>
+#include <stdio.h>
+#include <stdexcept>
+#include <dxgi1_4.h>
 //#include <D3Dcompiler.h>
 //#include <DirectXMath.h>
 //#include "d3dx12.h"
@@ -143,3 +146,10 @@
 #include <string>
 //#include <wrl.h>
 #include <shellapi.h>
+
+#ifndef _countof
+#define _countof(array) (sizeof(array) / sizeof(array[0]))
+#endif
+#ifndef SIZE_MAX
+#define SIZE_MAX 0xFFFFFFFF
+#endif

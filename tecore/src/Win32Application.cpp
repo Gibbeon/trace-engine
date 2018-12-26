@@ -1,49 +1,4 @@
-//*********************************************************
-//
-// Copyright (c) Microsoft. All rights reserved.
-// This code is licensed under the MIT License (MIT).
-// THIS CODE IS PROVIDED *AS IS* WITHOUT WARRANTY OF
-// ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING ANY
-// IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR
-// PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.
-//
-//*********************************************************
-
-
-#include "stdafx.h"
 #include "Win32Application.h"
-
-Window::Window(UINT width, UINT height, LPCTSTR name) :
-    m_width(width),
-    m_height(height),
-    m_title(name)
-{
- 
-}
-
-Window::~Window()
-{
-}
-
-void Window::OnInit()
-{
-
-}
-
-void Window::OnUpdate()
-{
-
-}
-
-void Window::OnRender()
-{
-
-}
-
-void Window::OnDestroy()
-{
-
-}
 
 HWND Win32Application::m_hwnd = nullptr;
 
