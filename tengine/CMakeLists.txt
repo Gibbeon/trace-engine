@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.9)
-project(teditor)
+project(tengine)
 
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/../../lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/../../lib)
@@ -17,14 +17,7 @@ endforeach( OUTPUTCONFIG CMAKE_CONFIGURATION_TYPES )
 add_compile_options("/sdl")
 
 include_directories(./include)
-
-include_directories(../tengine/include)
-link_directories(../tengine/lib)
  
 #this isn't best practice
 file(GLOB_RECURSE SOURCES "src/*.cpp" )
-add_executable(${PROJECT_NAME} WIN32 ${SOURCES})
-
-target_link_libraries(${PROJECT_NAME} d3d12.lib)
-target_link_libraries(${PROJECT_NAME} dxgi.lib)
-target_link_libraries(${PROJECT_NAME} tengine.lib)
+add_library(${PROJECT_NAME} STATIC ${SOURCES})
