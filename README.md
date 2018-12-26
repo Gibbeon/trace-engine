@@ -11,7 +11,7 @@ Trace Engine is a hobbiest project focused on creating a proof of concept for sm
 1. Setup Project
 + VS Code Project for Windows
 + Makefile Setup
-- Create Window
++ Create Window
 - Initialize Device Context
 - Setup Hardcoded Camera, Viewport
 - Draw Triangle with Hardcoded Color Vertecies
