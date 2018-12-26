@@ -1,79 +1,25 @@
 {
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
-        
         {
-            "name": "C++ Launch",
-            "type": "cppdbg",
-            "request": "launch",
-            "program": "${workspaceRoot}/tecore/bin/trace-engine_tecore.exe",
-            "args": [],
-            "stopAtEntry": false,
-            "cwd": "${workspaceRoot}",
-            "environment": [],
-            "externalConsole": true,
-            "preLaunchTask": "build",
-            "launchCompleteCommand": "exec-run",
-            "logging": {
-                "moduleLoad": false,
-                "trace": true
-                },
-                
-            "linux": {
-                "MIMode": "gdb",
-                "setupCommands": [
-                    {
-                        "description": "Enable pretty-printing for gdb",
-                        "text": "-enable-pretty-printing",
-                        "ignoreFailures": true
-                    }
-                ]
-            },
-            "osx": {
-                "MIMode": "lldb",
-                "setupCommands": [ { "text": "target-run", "description": "run target", "ignoreFailures": false }]
-            },
-            "windows": {
-                "MIMode": "gdb",
-                "miDebuggerPath": "C:/cygwin64/bin/gdb.exe",
-                "setupCommands": [
-                    {
-                        "description": "Enable pretty-printing for gdb",
-                        "text": "-enable-pretty-printing",
-                        "ignoreFailures": true
-                    }
-                ]
-            }
+            "name": "(Windows) Attach",
+            "type": "cppvsdbg",
+            "request": "attach",
+            "processId": "${command:pickProcess}"
         },
         {
-            "name": "C++ Attach",
-            "type": "cppdbg",
-            "request": "attach",
-            "program": "${workspaceRoot}/root/build/sly.out",
-            "processId": "${command:pickProcess}",
-            "linux": {
-                "MIMode": "gdb",
-                "setupCommands": [
-                    {
-                        "description": "Enable pretty-printing for gdb",
-                        "text": "-enable-pretty-printing",
-                        "ignoreFailures": true
-                    }
-                ]
-            },
-            "osx": {
-                "MIMode": "lldb"
-            },
-            "windows": {
-                "MIMode": "gdb",
-                "setupCommands": [
-                    {
-                        "description": "Enable pretty-printing for gdb",
-                        "text": "-enable-pretty-printing",
-                        "ignoreFailures": true
-                    }
-                ]
-            }
+            "name": "(Windows) Launch",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "tecore/bin/tecore.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": true
         }
     ]
 }
