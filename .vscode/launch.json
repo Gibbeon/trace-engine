@@ -6,7 +6,7 @@
             "name": "C++ Launch",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceRoot}/vcore/test/bin/vcore_test.exe",
+            "program": "${workspaceRoot}/tecore/bin/trace-engine_tecore.exe",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceRoot}",
