@@ -18,7 +18,7 @@ add_compile_options("/sdl")
 
 include_directories(./include)
 include_directories(./../tengine/include)
-include_directories(./../tewin64/include)
+include_directories(./../tewin32/include)
  
 #this isn't best practice
 file(GLOB_RECURSE SOURCES "src/*.cpp" )

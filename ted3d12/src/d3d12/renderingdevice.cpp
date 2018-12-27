@@ -1,5 +1,5 @@
-#include "te/d3d12/d3d12renderingdevice.h"
-#include "te/win32/win32window.h"
+#include "te/d3d12/renderingdevice.h"
+#include "te/win32/window.h"
 
 using namespace te;
 

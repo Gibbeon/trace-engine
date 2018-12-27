@@ -43,7 +43,8 @@
                 "${workspaceFolder}/teditor/include",
                 "${workspaceFolder}/tengine/include",
                 "${workspaceFolder}/tewin64/include",
-                "${workspaceFolder}/tewin64/include"
+                "${workspaceFolder}/tewin64/include",
+                "${workspaceFolder}/tewin32/include"
             ],
             "browse": {
                 "limitSymbolsToIncludedHeaders": true,

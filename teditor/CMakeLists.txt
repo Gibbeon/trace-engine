@@ -20,7 +20,7 @@ include_directories(./include)
 include_directories(../tengine/include)
 
 link_directories(../tengine/lib)
-link_directories(../tewin64/lib)
+link_directories(../tewin32/lib)
 link_directories(../ted3d12/lib)
  
 #this isn't best practice
@@ -32,5 +32,5 @@ target_link_libraries(${PROJECT_NAME} dxgi.lib)
 target_link_libraries(${PROJECT_NAME} D3DCompiler.lib)
 
 target_link_libraries(${PROJECT_NAME} tengine.lib)
-target_link_libraries(${PROJECT_NAME} tewin64.lib)
+target_link_libraries(${PROJECT_NAME} tewin32.lib)
 target_link_libraries(${PROJECT_NAME} ted3d12.lib)

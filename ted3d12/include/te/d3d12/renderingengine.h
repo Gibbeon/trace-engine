@@ -1,6 +1,6 @@
 #pragma once 
 
-#include "te/d3d12global.h"
+#include "te/d3d12/global.h"
 
 namespace te {
 

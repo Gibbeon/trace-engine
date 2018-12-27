@@ -1,5 +1,5 @@
 #include "te/engine.h"
-#include "te/d3d12/d3d12renderingengine.h"
+#include "te/d3d12/renderingengine.h"
 
 using namespace te;
 

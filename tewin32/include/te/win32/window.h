@@ -1,6 +1,6 @@
 #pragma once
 
-#include "te/win32global.h"
+#include "te/win32/global.h"
 
 namespace te {
 class Win32Application;

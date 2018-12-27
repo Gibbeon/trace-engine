@@ -1,5 +1,5 @@
-#include "te/win32/win32application.h"
-#include "te/win32/win32window.h"
+#include "te/win32/application.h"
+#include "te/win32/window.h"
 
 using namespace te;
 
