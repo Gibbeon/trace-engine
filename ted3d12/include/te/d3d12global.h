@@ -3,6 +3,8 @@
 #include <windows.h>
 #include <InitGuid.h>
 #include <d3d12.h>
+
+#include <D3DCompiler.h>
 #include <stdio.h>
 #include <stdexcept>
 #include <dxgi1_4.h>

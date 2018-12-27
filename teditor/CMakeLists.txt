@@ -29,6 +29,8 @@ add_executable(${PROJECT_NAME} WIN32 ${SOURCES})
 
 target_link_libraries(${PROJECT_NAME} d3d12.lib)
 target_link_libraries(${PROJECT_NAME} dxgi.lib)
+target_link_libraries(${PROJECT_NAME} D3DCompiler.lib)
+
 target_link_libraries(${PROJECT_NAME} tengine.lib)
 target_link_libraries(${PROJECT_NAME} tewin64.lib)
 target_link_libraries(${PROJECT_NAME} ted3d12.lib)
