@@ -52,6 +52,56 @@
             "problemMatcher": "$msCompile",
 
             
+        },
+        {
+            "label": "build tewin64",
+            "type": "shell",
+            "command": "py.exe",
+            "windows": {
+                "args": [
+                    "./build-win64.py"
+                ],
+            },
+            "args": [
+                
+            ],
+            "options": {
+                "cwd": "${workspaceRoot}/tewin64"
+            },
+            "group": "build",
+            "presentation": {
+                // Reveal the output only if unrecognized errors occur.
+                "reveal": "silent"
+            },
+            // Use the standard MS compiler pattern to detect errors, warnings and infos
+            "problemMatcher": "$msCompile",
+
+            
+        },
+        {
+            "label": "build ted3d12",
+            "type": "shell",
+            "command": "py.exe",
+            "windows": {
+                "args": [
+                    "./build-win64.py"
+                ],
+            },
+            "args": [
+                
+            ],
+            "options": {
+                "cwd": "${workspaceRoot}/ted3d12"
+            },
+            "group": "build",
+            "presentation": {
+                // Reveal the output only if unrecognized errors occur.
+                "reveal": "silent"
+            },
+            // Use the standard MS compiler pattern to detect errors, warnings and infos
+            "problemMatcher": "$msCompile",
+
+            
         }
     ]
 }

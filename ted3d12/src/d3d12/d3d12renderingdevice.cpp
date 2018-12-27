@@ -1,6 +1,8 @@
-#include "window.h"
-#include "Win32Application.h"
-//------------------------------------------------------------------------------------------------
+#include "te/d3d12/d3d12renderingdevice.h"
+#include "te/win32/win32window.h"
+
+using namespace te;
+
 struct CD3DX12_RESOURCE_BARRIER : public D3D12_RESOURCE_BARRIER
 {
     CD3DX12_RESOURCE_BARRIER() = default;
@@ -46,66 +48,15 @@ struct CD3DX12_RESOURCE_BARRIER : public D3D12_RESOURCE_BARRIER
     }
 };
 
-Window::Window(UINT width, UINT height, LPCTSTR name) :
-    m_width(width),
-    m_height(height),
-    m_title(name)
+D3D12RenderingDevice::D3D12RenderingDevice(ID3D12Device* device, IDXGIFactory4* factory):
+    m_device(device),
+    m_factory(factory)
 {
- 
+
 }
 
-Window::~Window()
+bool_t D3D12RenderingDevice::Attach(IDrawWindow* pWindow)
 {
-}
-
-void Window::OnInit()
-{
-    UINT dxgiFactoryFlags = 0;
-
-    // Enable the debug layer (requires the Graphics Tools "optional feature").
-    // NOTE: Enabling the debug layer after device creation will invalidate the active device.
-    {
-        ID3D12Debug* debugController;
-        if (SUCCEEDED(D3D12GetDebugInterface(IID_ID3D12Debug, reinterpret_cast<void**>(&debugController))))
-        {
-            debugController->EnableDebugLayer();
-
-            // Enable additional debug layers.
-            dxgiFactoryFlags |= DXGI_CREATE_FACTORY_DEBUG;
-        }
-    }
-
-    IDXGIFactory4* factory;
-    ThrowIfFailed(CreateDXGIFactory2(dxgiFactoryFlags, IID_IDXGIFactory4, reinterpret_cast<void**>(&factory)));
-   
-    IDXGIAdapter1* adapter = nullptr;
-
-    for (UINT adapterIndex = 0; DXGI_ERROR_NOT_FOUND != factory->EnumAdapters1(adapterIndex, &adapter); ++adapterIndex)
-    {
-        DXGI_ADAPTER_DESC1 desc;
-        adapter->GetDesc1(&desc);
-		
-        // Check to see if the adapter supports Direct3D 12, but don't create the
-        // actual device yet.
-		try {
-
-
-			if (SUCCEEDED(D3D12CreateDevice(adapter, D3D_FEATURE_LEVEL_11_0, IID_ID3D12Device, reinterpret_cast<void**>(&m_device))))
-			{
-				break;
-			}
-		}
-		catch(...)
-		{
-			printf("Test");
-		}
-    }
-
-    if(m_device == nullptr)
-    {
-        throw HrException(-1);
-    }
-
     // Describe and create the command queue.
     D3D12_COMMAND_QUEUE_DESC queueDesc = {};
     queueDesc.Flags = D3D12_COMMAND_QUEUE_FLAG_NONE;
@@ -116,17 +67,17 @@ void Window::OnInit()
     // Describe and create the swap chain.
     DXGI_SWAP_CHAIN_DESC1 swapChainDesc = {};
     swapChainDesc.BufferCount = FrameCount;
-    swapChainDesc.Width = m_width;
-    swapChainDesc.Height = m_height;
+    swapChainDesc.Width = pWindow->GetWidth();
+    swapChainDesc.Height = pWindow->GetHeight();
     swapChainDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
     swapChainDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
     swapChainDesc.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;
     swapChainDesc.SampleDesc.Count = 1;
 
     IDXGISwapChain1* swapChain;
-    ThrowIfFailed(factory->CreateSwapChainForHwnd(
+    ThrowIfFailed(m_factory->CreateSwapChainForHwnd(
         m_commandQueue,        // Swap chain needs the queue so that it can force a flush on it.
-        Win32Application::GetHwnd(),
+        reinterpret_cast<Win32Window*>(pWindow)->GetHwnd(),
         &swapChainDesc,
         nullptr,
         nullptr,
@@ -134,7 +85,7 @@ void Window::OnInit()
         ));
 
     // This sample does not support fullscreen transitions.
-    ThrowIfFailed(factory->MakeWindowAssociation(Win32Application::GetHwnd(), DXGI_MWA_NO_ALT_ENTER));
+    //ThrowIfFailed(factory->MakeWindowAssociation(Win32Application::GetHwnd(), DXGI_MWA_NO_ALT_ENTER));
 
     m_swapChain = reinterpret_cast<IDXGISwapChain3*>(swapChain);
     if(m_swapChain == nullptr)
@@ -191,16 +142,14 @@ void Window::OnInit()
             ThrowIfFailed(HRESULT_FROM_WIN32(GetLastError()));
         }
     }
+
+    pWindow->SetRenderingDevice(this);
+
+    return true;
 }
 
-void Window::OnUpdate()
-{
-
-}
-
-void Window::OnRender()
-{
-    // Record all the commands we need to render the scene into the command list.
+bool_t D3D12RenderingDevice::SwapBuffers() {
+        // Record all the commands we need to render the scene into the command list.
     // Command list allocators can only be reset when the associated 
     // command lists have finished execution on the GPU; apps should use 
     // fences to determine GPU execution progress.
@@ -255,9 +204,6 @@ void Window::OnRender()
     }
 
     m_frameIndex = m_swapChain->GetCurrentBackBufferIndex();
-}
 
-void Window::OnDestroy()
-{
-
+    return true;
 }

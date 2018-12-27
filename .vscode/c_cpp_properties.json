@@ -41,7 +41,9 @@
             "includePath": [
                 "${workspaceRoot}",
                 "${workspaceFolder}/teditor/include",
-                "${workspaceFolder}/tengine/include"
+                "${workspaceFolder}/tengine/include",
+                "${workspaceFolder}/tewin64/include",
+                "${workspaceFolder}/tewin64/include"
             ],
             "browse": {
                 "limitSymbolsToIncludedHeaders": true,

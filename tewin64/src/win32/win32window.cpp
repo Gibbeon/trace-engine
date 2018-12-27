@@ -1,26 +1,31 @@
-#include "Win32Application.h"
+#include "te/win32/win32window.h"
+#include "te/win32/win32application.h"
 
-HWND Win32Application::m_hwnd = nullptr;
+using namespace te;
 
-int Win32Application::Run(Window* pSample, HINSTANCE hInstance, int nCmdShow)
+Win32Window::Win32Window(Win32Application* pApp, uint_t width, uint_t height, string_t pszTitle) :
+    m_width(width),
+    m_height(height),
+    m_title(pszTitle)
 {
+    m_device = nullptr;
     // Initialize the window class.
-    WNDCLASSEX windowClass = { 0 };
+    WNDCLASSEX windowClass = { 0 }; 
     windowClass.cbSize = sizeof(WNDCLASSEX);
     windowClass.style = CS_HREDRAW | CS_VREDRAW;
     windowClass.lpfnWndProc = WindowProc;
-    windowClass.hInstance = hInstance;
+    windowClass.hInstance = pApp->GetInstance();
     windowClass.hCursor = LoadCursor(NULL, IDC_ARROW);
-    windowClass.lpszClassName = "DXSampleClass";
+    windowClass.lpszClassName = "Win32Window";
     RegisterClassEx(&windowClass);
 
-    RECT windowRect = { 0, 0, static_cast<LONG>(pSample->GetWidth()), static_cast<LONG>(pSample->GetHeight()) };
+    RECT windowRect = { 0, 0, static_cast<LONG>(m_width), static_cast<LONG>(m_height) };
     AdjustWindowRect(&windowRect, WS_OVERLAPPEDWINDOW, FALSE);
-
+    
     // Create the window and store a handle to it.
-    m_hwnd = CreateWindow(
+    this->SetHwnd(CreateWindow(
         windowClass.lpszClassName,
-        pSample->GetTitle(),
+        GetTitle(),
         WS_OVERLAPPEDWINDOW,
         CW_USEDEFAULT,
         CW_USEDEFAULT,
@@ -28,15 +33,14 @@ int Win32Application::Run(Window* pSample, HINSTANCE hInstance, int nCmdShow)
         windowRect.bottom - windowRect.top,
         nullptr,        // We have no parent window.
         nullptr,        // We aren't using menus.
-        hInstance,
-        pSample);
+        pApp->GetInstance(),
+        this));
 
-    // Initialize the sample. OnInit is defined in each child-implementation of DXSample.
-    pSample->OnInit();
+    ShowWindow(m_hWND, SW_SHOWDEFAULT);
+}
 
-    ShowWindow(m_hwnd, nCmdShow);
-
-    // Main sample loop.
+bool_t Win32Window::ProcessMessages()
+{
     MSG msg = {};
     while (msg.message != WM_QUIT)
     {
@@ -48,16 +52,21 @@ int Win32Application::Run(Window* pSample, HINSTANCE hInstance, int nCmdShow)
         }
     }
 
-    pSample->OnDestroy();
+    this->OnDestroy();
 
     // Return this part of the WM_QUIT message to Windows.
     return static_cast<char>(msg.wParam);
 }
 
-// Main message handler for the sample.
-LRESULT CALLBACK Win32Application::WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+void Win32Window::OnRender()
 {
-    Window* pSample = reinterpret_cast<Window*>(GetWindowLongPtr(hWnd, GWLP_USERDATA));
+    if(m_device != nullptr)
+        m_device->SwapBuffers();
+}
+// Main message handler for the sample.
+LRESULT CALLBACK Win32Window::WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+{
+    Win32Window* pSample = reinterpret_cast<Win32Window*>(GetWindowLongPtr(hWnd, GWLP_USERDATA));
 
     switch (message)
     {
@@ -69,7 +78,7 @@ LRESULT CALLBACK Win32Application::WindowProc(HWND hWnd, UINT message, WPARAM wP
         }
         return 0;
 
-    case WM_KEYDOWN:
+    /*case WM_KEYDOWN:
         if (pSample)
         {
             pSample->OnKeyDown(static_cast<UINT8>(wParam));
@@ -81,12 +90,12 @@ LRESULT CALLBACK Win32Application::WindowProc(HWND hWnd, UINT message, WPARAM wP
         {
             pSample->OnKeyUp(static_cast<UINT8>(wParam));
         }
-        return 0;
+        return 0;*/
 
     case WM_PAINT:
         if (pSample)
         {
-            pSample->OnUpdate();
+            //pSample->OnUpdate();
             pSample->OnRender();
         }
         return 0;
