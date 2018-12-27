@@ -102,6 +102,31 @@
             "problemMatcher": "$msCompile",
 
             
+        },
+        {
+            "label": "build tegl",
+            "type": "shell",
+            "command": "py.exe",
+            "windows": {
+                "args": [
+                    "./build-win64.py"
+                ],
+            },
+            "args": [
+                
+            ],
+            "options": {
+                "cwd": "${workspaceRoot}/tegl"
+            },
+            "group": "build",
+            "presentation": {
+                // Reveal the output only if unrecognized errors occur.
+                "reveal": "silent"
+            },
+            // Use the standard MS compiler pattern to detect errors, warnings and infos
+            "problemMatcher": "$msCompile",
+
+            
         }
     ]
 }

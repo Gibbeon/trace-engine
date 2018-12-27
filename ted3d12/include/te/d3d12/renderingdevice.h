@@ -83,22 +83,6 @@ struct CD3DX12_VIEWPORT : public D3D12_VIEWPORT
         MaxDepth = maxDepth;
     }
 };
-struct Vec3
-{
-
-    float x,y,z;
-};
-
-struct Color
-{
-    float r,g,b,a;
-};
-
-struct Vertex
-{
-    Vec3 position;
-    Color color;
-};
 
 class D3D12RenderingDevice : public IRenderingDevice
 {

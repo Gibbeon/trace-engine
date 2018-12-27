@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.9)
-project(teditor)
+project(tegl)
 
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/../../lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/../../lib)
@@ -17,24 +17,9 @@ endforeach( OUTPUTCONFIG CMAKE_CONFIGURATION_TYPES )
 add_compile_options("/sdl")
 
 include_directories(./include)
-include_directories(../tengine/include)
-
-link_directories(../tengine/lib)
-link_directories(../tewin32/lib)
-link_directories(../ted3d12/lib)
-link_directories(../tegl/lib)
+include_directories(./../tengine/include)
+include_directories(./../tewin32/include)
  
 #this isn't best practice
 file(GLOB_RECURSE SOURCES "src/*.cpp" )
-add_executable(${PROJECT_NAME} WIN32 ${SOURCES})
-
-target_link_libraries(${PROJECT_NAME} tengine.lib)
-target_link_libraries(${PROJECT_NAME} tewin32.lib)
-
-#target_link_libraries(${PROJECT_NAME} ted3d12.lib)
-#target_link_libraries(${PROJECT_NAME} d3d12.lib)
-#target_link_libraries(${PROJECT_NAME} dxgi.lib)
-#target_link_libraries(${PROJECT_NAME} D3DCompiler.lib)
-
-target_link_libraries(${PROJECT_NAME} tegl.lib)
-target_link_libraries(${PROJECT_NAME} opengl32.lib)
+add_library(${PROJECT_NAME} STATIC ${SOURCES})

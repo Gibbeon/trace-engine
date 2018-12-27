@@ -38,3 +38,20 @@ struct FuncType
 {
     typedef TResult (*Func)();
 };
+
+struct Vec3
+{
+
+    float x,y,z;
+};
+
+struct Color
+{
+    float r,g,b,a;
+};
+
+struct Vertex
+{
+    Vec3 position;
+    Color color;
+};
