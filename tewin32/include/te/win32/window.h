@@ -4,18 +4,14 @@
 
 namespace te {
 class Win32Application;
-class Win32Window : public IDrawWindow
+class Win32Window
 {
     public:
-        Win32Window(Win32Application* pApp, uint_t width, uint_t height, string_t pszTitle);
+        Win32Window(ptr_t<> hInstance, uint_t width, uint_t height, string_t pszTitle);
 
-        virtual void OnInit() {}
-        virtual void OnDestroy() {}
         virtual void OnRender();
-        virtual void OnUpdate() {}
 
         virtual bool_t Show() { return ShowWindow(m_hWND, SW_SHOWDEFAULT); }
-        virtual bool_t Hide() { return ShowWindow(m_hWND, SW_SHOWDEFAULT); }
 
         // Accessors.
         virtual uint_t GetWidth() const         { return m_width; }
@@ -26,7 +22,6 @@ class Win32Window : public IDrawWindow
         virtual void SetHwnd(HWND hWND) { m_hWND = hWND; }
 
         virtual bool_t ProcessMessages();
-
 
 protected:
     static LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);

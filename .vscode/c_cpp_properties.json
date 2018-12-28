@@ -45,7 +45,8 @@
                 "${workspaceFolder}/tewin64/include",
                 "${workspaceFolder}/tewin64/include",
                 "${workspaceFolder}/tewin32/include",
-                "${workspaceFolder}/tegl/include"
+                "${workspaceFolder}/tegl/include",
+                "${workspaceFolder}/ted3d12/include"
             ],
             "browse": {
                 "limitSymbolsToIncludedHeaders": true,

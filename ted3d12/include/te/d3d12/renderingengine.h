@@ -1,4 +1,4 @@
-#pragma once 
+/* #pragma once 
 
 #include "te/d3d12/global.h"
 
@@ -15,4 +15,4 @@ class D3D12RenderingEngine : public IRenderingEngine
 
 };
 
-}
+} */

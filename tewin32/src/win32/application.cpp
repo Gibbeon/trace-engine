@@ -1,4 +1,4 @@
-#include "te/win32/application.h"
+/* #include "te/win32/application.h"
 #include "te/win32/window.h"
 
 using namespace te;
@@ -16,3 +16,4 @@ bool_t Win32Application::CreateDrawWindow(IDrawWindow** pWindow, uint_t width, u
     
     return true;
 }
+ */

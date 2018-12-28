@@ -1,4 +1,4 @@
-#pragma once
+/* #pragma once
 
 #include "global.h"
 
@@ -62,4 +62,6 @@ public:
 extern bool_t _CreateApplicationImpl(IApplication** pApp, ptr_t pInstance, string_t pszArg);
 extern bool_t _CreateRenderingEngineImpl(IRenderingEngine** pApp, ptr_t pInstance, string_t pszArg);
 
-}
+} */
+
+#include "te/application.h"

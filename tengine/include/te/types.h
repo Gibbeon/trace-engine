@@ -1,6 +1,30 @@
 #pragma once
 
-typedef void* ptr_t;
+template <typename TType = void>
+class ptr_t {
+public:
+    ptr_t(TType* ptr = nullptr) { m_ptr = ptr; }    
+    ptr_t(ptr_t<TType>& ptr) { m_ptr = ptr.ptr(); }
+
+    TType* ptr() { return m_ptr; }
+
+    operator TType*() const { return ptr(); }
+    operator TType*() { return ptr(); }
+
+    TType* operator->() { return ptr(); }
+
+    ptr_t<TType>& operator=(TType* other) { m_ptr = other;  return *this;}
+    ptr_t<TType>& operator=(std::nullptr_t other) { m_ptr = other; return *this; }
+
+    template <typename TOtherType>
+    TOtherType* As() { return reinterpret_cast<TOtherType*>(m_ptr); }
+
+private:
+    TType* m_ptr;
+};
+
+template<typename TType>
+using out_ptr_t = TType**;
 
 typedef unsigned long long u64;
 typedef signed long long s64;

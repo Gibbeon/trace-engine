@@ -1,15 +1,15 @@
-#pragma once 
+/* #pragma once 
 
 #include "te/win32/global.h"
 
 namespace te {
 
-class Win32Application : public IApplication
+class Win32Application
 {
 public:
-    Win32Application(ptr_t pInstance, string_t pszArg);
+    Win32Application(ptr_t<> pInstance, string_t pszArg);
 
-    virtual bool_t CreateDrawWindow(IDrawWindow** pWindow, uint_t width, uint_t height, string_t pszTitle);
+    virtual bool_t CreateDrawWindow(I** pWindow, uint_t width, uint_t height, string_t pszTitle);
 
     HINSTANCE GetInstance() { return m_hInstance; }
 
@@ -21,4 +21,4 @@ private:
 
 
 
-}
+} */

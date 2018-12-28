@@ -1,19 +1,12 @@
-/* #include "te/d3d12/renderingengine.h"
-#include "te/d3d12/renderingdevice.h"
-
+#include "te/d3d12/gfxsystem.h"
+#include "te/d3d12/device.h"
 using namespace te;
 
-D3D12RenderingEngine::D3D12RenderingEngine()
-{
-
-}
-
-bool_t D3D12RenderingEngine::CreateDevice(IRenderingDevice** pDevice)
+bool_t D3D12System::CreateDevice(out_ptr_t<IGfxDevice> result, GfxDeviceDesc& desc)
 {
     UINT dxgiFactoryFlags = 0;
 
-    // Enable the debug layer (requires the Graphics Tools "optional feature").
-    // NOTE: Enabling the debug layer after device creation will invalidate the active device.
+    #ifdef _DEBUG
     {
         ID3D12Debug* debugController;
         if (SUCCEEDED(D3D12GetDebugInterface(IID_ID3D12Debug, reinterpret_cast<void**>(&debugController))))
@@ -24,31 +17,26 @@ bool_t D3D12RenderingEngine::CreateDevice(IRenderingDevice** pDevice)
             dxgiFactoryFlags |= DXGI_CREATE_FACTORY_DEBUG;
         }
     }
+    #endif
 
     IDXGIFactory4* factory;
     ThrowIfFailed(CreateDXGIFactory2(dxgiFactoryFlags, IID_IDXGIFactory4, reinterpret_cast<void**>(&factory)));
 
-    IDXGIAdapter1* adapter = nullptr;
-    ID3D12Device* m_device = nullptr;
+    IDXGIAdapter1*  adapter = nullptr;
+    ID3D12Device*   device = nullptr;
 
     for (UINT adapterIndex = 0; DXGI_ERROR_NOT_FOUND != factory->EnumAdapters1(adapterIndex, &adapter); ++adapterIndex)
     {
         DXGI_ADAPTER_DESC1 desc;
         adapter->GetDesc1(&desc);
 
-        if (SUCCEEDED(D3D12CreateDevice(adapter, D3D_FEATURE_LEVEL_11_0, IID_ID3D12Device, reinterpret_cast<void**>(&m_device))))
+        if (SUCCEEDED(D3D12CreateDevice(adapter, D3D_FEATURE_LEVEL_11_0, IID_ID3D12Device, reinterpret_cast<void**>(&device))))
         {
             break;
         }
     }
 
-    if(m_device == nullptr)
-    {
-        throw HrException(-1);
-    }
-
-    *pDevice = new D3D12RenderingDevice(m_device, factory);
+    (*result) = new D3D12Device(factory, adapter, device);
 
     return true;
 }
- */

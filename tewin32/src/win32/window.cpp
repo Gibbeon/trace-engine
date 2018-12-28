@@ -3,23 +3,22 @@
 
 using namespace te;
 
-Win32Window::Win32Window(Win32Application* pApp, uint_t width, uint_t height, string_t pszTitle) :
+Win32Window::Win32Window(ptr_t<> hInstance, uint_t width, uint_t height, string_t pszTitle) :
     m_width(width),
     m_height(height),
     m_title(pszTitle)
 {
-    m_device = nullptr;
     // Initialize the window class.
     WNDCLASSEX windowClass = { 0 }; 
     windowClass.cbSize = sizeof(WNDCLASSEX);
     windowClass.style = CS_HREDRAW | CS_VREDRAW;
     windowClass.lpfnWndProc = WindowProc;
-    windowClass.hInstance = pApp->GetInstance();
+    windowClass.hInstance = reinterpret_cast<HINSTANCE>(hInstance.ptr());
     windowClass.hCursor = LoadCursor(NULL, IDC_ARROW);
     windowClass.lpszClassName = "Win32Window";
     RegisterClassEx(&windowClass);
 
-    RECT windowRect = { 0, 0, static_cast<LONG>(m_width), static_cast<LONG>(m_height) };
+    ::RECT windowRect = { 0, 0, static_cast<LONG>(m_width), static_cast<LONG>(m_height) };
     AdjustWindowRect(&windowRect, WS_OVERLAPPEDWINDOW, FALSE);
     
     // Create the window and store a handle to it.
@@ -33,7 +32,7 @@ Win32Window::Win32Window(Win32Application* pApp, uint_t width, uint_t height, st
         windowRect.bottom - windowRect.top,
         nullptr,        // We have no parent window.
         nullptr,        // We aren't using menus.
-        pApp->GetInstance(),
+        reinterpret_cast<HINSTANCE>(hInstance.ptr()),
         this));
 
     ShowWindow(m_hWND, SW_SHOWDEFAULT);
@@ -42,17 +41,18 @@ Win32Window::Win32Window(Win32Application* pApp, uint_t width, uint_t height, st
 bool_t Win32Window::ProcessMessages()
 {
     MSG msg = {};
-    while (msg.message != WM_QUIT)
+    bool_t process = true;
+    while (process)
     {
+        process = false;
         // Process any messages in the queue.
         if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
         {
             TranslateMessage(&msg);
             DispatchMessage(&msg);
+            process = true; 
         }
     }
-
-    this->OnDestroy();
 
     // Return this part of the WM_QUIT message to Windows.
     return static_cast<char>(msg.wParam);
@@ -60,8 +60,7 @@ bool_t Win32Window::ProcessMessages()
 
 void Win32Window::OnRender()
 {
-    if(m_device != nullptr)
-        m_device->SwapBuffers();
+
 }
 // Main message handler for the sample.
 LRESULT CALLBACK Win32Window::WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
@@ -78,27 +77,9 @@ LRESULT CALLBACK Win32Window::WindowProc(HWND hWnd, UINT message, WPARAM wParam,
         }
         return 0;
 
-    /*case WM_KEYDOWN:
-        if (pSample)
-        {
-            pSample->OnKeyDown(static_cast<UINT8>(wParam));
-        }
-        return 0;
-
-    case WM_KEYUP:
-        if (pSample)
-        {
-            pSample->OnKeyUp(static_cast<UINT8>(wParam));
-        }
-        return 0;*/
-
-    case WM_PAINT:
-        if (pSample)
-        {
-            //pSample->OnUpdate();
-            pSample->OnRender();
-        }
-        return 0;
+case WM_PAINT: {
+	ValidateRect(hWnd, NULL);
+} return 0;
 
     case WM_DESTROY:
         PostQuitMessage(0);
